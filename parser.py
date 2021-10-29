@@ -89,9 +89,9 @@ if __name__ == "__main__":
     parser = Parser()
     str = input("infix expression: ")
     try:
-        infix_split = parser.tokenize(str)
-        postfix_split = parser.parse(infix_split)
+        infix_tokens = parser.tokenize(str)
+        postfix_tokens = parser.parse(infix_tokens)
     except Exception as e:
         print(e.args)
     else:
-        print(" ".join(postfix_split))
+        print(" ".join(postfix_tokens))

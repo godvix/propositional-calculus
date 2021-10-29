@@ -40,15 +40,15 @@ OPERATORS = {
 }
 
 
-def split_expr(expr: str) -> list:
-    """Split an expression, typically infix, to a list of operands and operators."""
+def tokens_expr(expr: str) -> list:
+    """tokens an expression, typically infix, to a list of operands and operators."""
     res = ""
     for ch in expr:
         if ch in OPERATORS:
             res += f" {ch} "
         else:
             res += ch
-    return res.split()
+    return res.tokens()
 
 
 def order_between(left_optr: str, right_optr: str) -> str:
@@ -63,64 +63,64 @@ def order_between(left_optr: str, right_optr: str) -> str:
         return ">"
 
 
-def infix_to_prefix(infix_split: list) -> list:
-    """Convert infix_split to prefix_split."""
-    tmp_split = ["("] + infix_split
+def infix_to_prefix(infix_tokens: list) -> list:
+    """Convert infix_tokens to prefix_tokens."""
+    tmp_tokens = ["("] + infix_tokens
     optrs = [")"]  # operator stack
-    prefix_split = []  # for efficiency, we append first, then reverse it
+    prefix_tokens = []  # for efficiency, we append first, then reverse it
     i = -1
     while len(optrs) > 0:
-        if tmp_split[i] in OPERATORS:
+        if tmp_tokens[i] in OPERATORS:
             order = order_between(
-                "$" if tmp_split[i] == ")" else tmp_split[i], optrs[-1]
+                "$" if tmp_tokens[i] == ")" else tmp_tokens[i], optrs[-1]
             )
             if order == "<":
-                prefix_split.append(optrs[-1])
+                prefix_tokens.append(optrs[-1])
                 optrs.pop()
             elif order == "=":
                 optrs.pop()
                 i -= 1
             else:  # order == '>'
-                optrs.append(tmp_split[i])
+                optrs.append(tmp_tokens[i])
                 i -= 1
-        else:  # tmp_split[i] is an operand
-            prefix_split.append(tmp_split[i])
+        else:  # tmp_tokens[i] is an operand
+            prefix_tokens.append(tmp_tokens[i])
             i -= 1
-    prefix_split.reverse()
-    return prefix_split
+    prefix_tokens.reverse()
+    return prefix_tokens
 
 
-def infix_to_postfix(infix_split: list) -> list:
-    "Convert infix_split to postfix_split"
-    infix_split.append(")")  # the extra ')' will be removed later
+def infix_to_postfix(infix_tokens: list) -> list:
+    "Convert infix_tokens to postfix_tokens"
+    infix_tokens.append(")")  # the extra ')' will be removed later
     optrs = ["("]  # operator stack
-    postfix_split = []
+    postfix_tokens = []
     i = 0
     while len(optrs) > 0:
-        if infix_split[i] in OPERATORS:
+        if infix_tokens[i] in OPERATORS:
             order = order_between(
-                optrs[-1], "$" if infix_split[i] == "(" else infix_split[i]
+                optrs[-1], "$" if infix_tokens[i] == "(" else infix_tokens[i]
             )
             if order == "<":
-                optrs.append(infix_split[i])
+                optrs.append(infix_tokens[i])
                 i += 1
             elif order == "=":
                 optrs.pop()
                 i += 1
             else:  # order == '>'
-                postfix_split.append(optrs[-1])
+                postfix_tokens.append(optrs[-1])
                 optrs.pop()
-        else:  # tmp_split[i] is an operand
-            postfix_split.append(infix_split[i])
+        else:  # tmp_tokens[i] is an operand
+            postfix_tokens.append(infix_tokens[i])
             i += 1
-    infix_split.pop()  # remove extra ')'
-    return postfix_split
+    infix_tokens.pop()  # remove extra ')'
+    return postfix_tokens
 
 
 if __name__ == "__main__":
     infix_expr = input("infix expression: ")
-    infix_split = split_expr(infix_expr)
-    prefix_split = infix_to_prefix(infix_split)
-    print("prefix expression: ", " ".join(prefix_split))
-    postfix_split = infix_to_postfix(infix_split)
-    print("postfix expression: ", " ".join(postfix_split))
+    infix_tokens = tokens_expr(infix_expr)
+    prefix_tokens = infix_to_prefix(infix_tokens)
+    print("prefix expression: ", " ".join(prefix_tokens))
+    postfix_tokens = infix_to_postfix(infix_tokens)
+    print("postfix expression: ", " ".join(postfix_tokens))
