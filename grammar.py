@@ -19,22 +19,22 @@ Rule = namedtuple(
 )
 
 
-def p_variable(p: list):
+def p_variable(p: list) -> None:
     """E : X"""
     p[0] = [p[1]]
 
 
-def p_parens(p: list):
+def p_parens(p: list) -> None:
     """E : '(' E ')'"""
     p[0] = p[2]
 
 
-def p_negation(p: list):
+def p_negation(p: list) -> None:
     """E : '!' E"""
     p[0] = p[2] + ["!"]
 
 
-def p_binary_operation(p: list):
+def p_binary_operation(p: list) -> None:
     """
     E : E '|' E
       | E '&' E
