@@ -3,7 +3,7 @@ from collections import namedtuple
 
 tokens = {
     "ignore": r"\s",
-    "X": r"[a-zA-Z_][a-zA-Z0-9_]*",
+    "X": r"0|1|([a-zA-Z_][a-zA-Z0-9_]*)",
     "(": r"\(",
     ")": r"\)",
     "!": r"!",
