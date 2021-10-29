@@ -1,9 +1,11 @@
 from parser import Parser
 
 
-def infix_to_postfix(infix_str: str) -> list:
-    parser = Parser()
-    return parser.parse(infix_str)
+parser = Parser()
+
+
+def infix_to_postfix(infix_split: list) -> list:
+    return parser.parse(infix_split)
 
 
 def postfix_to_prefix(postfix_list: list) -> list:
@@ -27,7 +29,8 @@ def postfix_to_prefix(postfix_list: list) -> list:
 if __name__ == "__main__":
     infix_str = input("infix expression: ")
     try:
-        postfix_list = infix_to_postfix(infix_str)
+        infix_split = parser.tokenize(infix_str)
+        postfix_list = infix_to_postfix(infix_split)
         prefix_list = postfix_to_prefix(postfix_list)
     except Exception as e:
         print(e)

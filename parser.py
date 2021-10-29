@@ -36,10 +36,7 @@ class Parser:
         tokens.append(Token(symbol="$", value="EOF"))
         return tokens
 
-    def parse(self, input: str, debug: bool = False, debug_file=sys.stderr):
-        tokens = self.tokenize(input)
-        if debug:
-            print(tokens, file=debug_file)
+    def parse(self, tokens: list, debug: bool = False, debug_file=sys.stderr):
         tokens.reverse()
         stack = [Step(state=0)]
         while len(tokens) > 0:
@@ -92,7 +89,8 @@ if __name__ == "__main__":
     parser = Parser()
     str = input("infix expression: ")
     try:
-        postfix_split = parser.parse(str)
+        infix_split = parser.tokenize(str)
+        postfix_split = parser.parse(infix_split)
     except Exception as e:
         print(e.args)
     else:
