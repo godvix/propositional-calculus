@@ -1,6 +1,5 @@
 from parser import Parser
-import parser
-from converter import infix_to_postfix, postfix_to_prefix
+from converter import Converter
 import pytest
 
 testdata = [
@@ -52,7 +51,8 @@ testdata = [
 def test_converter(infix_str, prefix_str, postfix_str):
     parser = Parser()
     infix_tokens = parser.tokenize(infix_str)
-    postfix_tokens = infix_to_postfix(infix_tokens)
+    converter = Converter()
+    postfix_tokens = converter.infix_to_postfix(infix_tokens)
     assert " ".join(postfix_tokens) == postfix_str
-    prefix_tokens = postfix_to_prefix(postfix_tokens)
+    prefix_tokens = converter.postfix_to_prefix(postfix_tokens)
     assert " ".join(prefix_tokens) == prefix_str
