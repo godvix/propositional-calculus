@@ -1,5 +1,7 @@
 # Propositional Calculus
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b465c330d4434b29a907e6a868e4c813)](https://app.codacy.com/gh/liblaf/propositional-calculus?utm_source=github.com&utm_medium=referral&utm_content=liblaf/propositional-calculus&utm_campaign=Badge_Grade_Settings)
+
 This is the programming homework of Discrete Mathematics(1).
 
 ## Homework 1
